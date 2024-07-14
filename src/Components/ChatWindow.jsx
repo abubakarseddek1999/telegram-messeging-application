@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { IoSend } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import '../Components/style.css';
+
 
 const ChatWindow = () => {
     const { id } = useParams();
@@ -30,15 +33,22 @@ const ChatWindow = () => {
     }, [messages]);
 
     const handleSendMessage = () => {
-        // Implement sending message logic here
-        // For demonstration, assume message is added to state directly
         const newMessageObj = {
             id: messages.length + 1,
             message: newMessage,
-            sender_name: "Your Name", // Replace with actual sender name
+            sender_name: "Your Name",
+            sender_id: "123",
+            created_at: new Date().toISOString(),
         };
         setMessages([...messages, newMessageObj]);
         setNewMessage('');
+    };
+
+    const formatTime = (timestamp) => {
+        const date = new Date(timestamp);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
     };
 
     if (error) {
@@ -48,7 +58,7 @@ const ChatWindow = () => {
     return (
         <div className="flex flex-col h-screen">
 
-            <div className='flex justify-between items-center gap-2 py-3 shadow-md bg-white w-full'>
+            <div className='flex justify-between items-center py-3 shadow-md bg-white w-full'>
 
                 <div className="ml-2">
                     <p className="text-xl font-bold ">Abu bakar</p>
@@ -60,11 +70,15 @@ const ChatWindow = () => {
                 </div>
             </div>
 
-            <div className="overflow-y-auto px-4 mt-5 ">
+            <div className="overflow-y-auto thin-scrollbar px-4 pt-5 ">
                 {messages.map(item => (
-                    <div key={item.id} className="mb-2 w-3/5 ml-2">
-                        <div className=''>
-                            <div className='bg-green-100 text-black rounded-lg p-3 max-w-screen-sm break-words shadow-sm'>{item.message}</div>
+                    <div
+                        key={item.id}
+                        className={`mb-2 flex ${item.sender_id === "123" ? 'justify-end' : 'justify-start'} w-full`}
+                    >
+                        <div className={`p-2 min-w-28 rounded-lg shadow-sm max-w-xs break-words ${item.sender_id === "123" ? 'bg-blue-100 text-black' : 'bg-green-100 text-black'}`}>
+                            <p>{item.message}</p>
+                            <p className="text-xs text-gray-500 text-right">{formatTime(item.created_at)}</p>
                         </div>
                     </div>
                 ))}
@@ -85,7 +99,7 @@ const ChatWindow = () => {
                     className=" bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-r"
                     onClick={handleSendMessage}
                 >
-                    Send
+                    <IoSend />
                 </button>
             </div>
         </div>

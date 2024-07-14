@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { IoIosMenu } from "react-icons/io";
+import '../Components/style.css';
 
 const ChatList = () => {
     const [chats, setChats] = useState([]);
@@ -29,11 +30,11 @@ const ChatList = () => {
         <div className="p-4 flex flex-col h-screen overflow-hidden">
             {/* search bar */}
             <div className='  bg-white flex justify-between items-center gap-2 py-2'>
-                <IoIosMenu className='text-4xl m-2' />
+                <IoIosMenu className='text-4xl m-1' />
                 <input className='bg-slate-100 p-2 rounded w-full' placeholder='Search' type="search" name="Search" id="" />
             </div>
 
-            <div className="flex-1 overflow-y-auto mt-2 pr-2">
+            <div className="flex-1 overflow-y-auto thin-scrollbar pr-2">
                 {/* telegram msg */}
                 <div className="mb-5 flex justify-between items-center ">
                     <div className='flex justify-start items-center'>
