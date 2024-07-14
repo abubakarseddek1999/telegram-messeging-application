@@ -4,6 +4,7 @@
     width: 4px; /* Width of the scrollbar */
 }
 
+
 .thin-scrollbar::-webkit-scrollbar-track {
     background: #f1f1f1; /* Background of the scrollbar track */
 }
@@ -14,5 +15,6 @@
 }
 
 .thin-scrollbar::-webkit-scrollbar-thumb:hover {
+    width: 8px; 
     background: #555; /* Color when hovering over the scrollbar thumb */
 }

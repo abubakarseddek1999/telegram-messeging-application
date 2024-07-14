@@ -5,7 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import '../Components/style.css';
-
+import bgImage from '../assets/Image/bg-2.jpg'
 
 const ChatWindow = () => {
     const { id } = useParams();
@@ -56,7 +56,8 @@ const ChatWindow = () => {
     }
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen"
+            style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
             <div className='flex justify-between items-center py-3 shadow-md bg-white w-full'>
 
@@ -70,15 +71,19 @@ const ChatWindow = () => {
                 </div>
             </div>
 
-            <div className="overflow-y-auto thin-scrollbar px-4 pt-5 ">
+            <div className="overflow-y-auto thin-scrollbar px-4 pt-5 "
+
+            >
                 {messages.map(item => (
                     <div
                         key={item.id}
                         className={`mb-2 flex ${item.sender_id === "123" ? 'justify-end' : 'justify-start'} w-full`}
                     >
-                        <div className={`p-2 min-w-28 rounded-lg shadow-sm max-w-xs break-words ${item.sender_id === "123" ? 'bg-blue-100 text-black' : 'bg-green-100 text-black'}`}>
+                        <div className={`p-2 min-w-28 flex gap-5 rounded-lg shadow-sm max-w-xs break-words ${item.sender_id === "123" ? 'bg-blue-100 text-black' : 'bg-green-100 text-black'}`}>
                             <p>{item.message}</p>
-                            <p className="text-xs text-gray-500 text-right">{formatTime(item.created_at)}</p>
+                            <div className='flex flex-col justify-end'>
+                                <p className="text-xs text-gray-600 text-right">{formatTime(item.created_at)}</p>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -86,7 +91,7 @@ const ChatWindow = () => {
                 <div ref={messageEndRef}></div>
             </div>
 
-            <div className="p-2 flex justify-center items-center">
+            <div className="pt-2 flex justify-center items-center">
                 <textarea
                     className="w-full border rounded-l p-2"
                     rows="1"
@@ -96,7 +101,7 @@ const ChatWindow = () => {
                 ></textarea>
 
                 <button
-                    className=" bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-r"
+                    className=" bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-r"
                     onClick={handleSendMessage}
                 >
                     <IoSend />
