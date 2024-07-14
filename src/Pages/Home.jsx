@@ -1,15 +1,21 @@
-
+import ChatList from "../Components/ChatList";
+import ChatWindow from "../Components/ChatWindow";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 const Home = () => {
     return (
-        <div className=""
-        style={{ 
-            backgroundImage: 'url(https://i.postimg.cc/DyW4Ph20/10-CAP-US-Header-Key-Features-of-Project-Management-Software-and-Top-Rated-Products-For-Each-US-1200.png)', 
-            backgroundSize: 'cover', 
-            backgroundPosition: 'center', 
-            height: '100vh' 
-        }}
-        >
-            <p className="text-white text-4xl md:text-6xl font-bold pt-10 flex justify-center items-center">You can assign your task there</p>
+        <div className="">
+            <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row bg-white">
+                <div className="w-full md:w-1/3 border-e-4">
+                    <ChatList />
+                </div>
+                <div className="w-full md:w-2/3">
+                    <Routes>
+                        <Route path="/chat/:id" element={<ChatWindow />} />
+                    </Routes>
+                </div>
+            </div>
+
+
         </div>
     );
 };
