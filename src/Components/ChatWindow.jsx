@@ -104,19 +104,17 @@ const ChatWindow = ({ selectedChatId, onBack }) => {
                 <div className="ml-2 flex md:gap-1 justify-center items-center">
                     {/* <img className="w-12 h-12 rounded-full mr-4" src="https://i.postimg.cc/VvC4rS7v/images-8.jpg" alt="" /> */}
                     <button onClick={onBack} className="md:hidden bg-transparent p-2">
-                    <IoMdArrowRoundBack className='text-xl'/>
+                        <IoMdArrowRoundBack className='text-xl' />
                     </button>
                     <div>
 
                         <div className={`w-12 h-12 rounded-full mr-4 flex items-center justify-center text-white ${getColorForName(name)}`}>
                             <span className="text-xl font-bold">{initials}</span>
                         </div>
-
-
                     </div>
                     <div>
                         <p className="text-xl font-bold ">{name}</p>
-                        <p>Last seen Yesterday at 12:00</p>
+                        <p>online</p>
                     </div>
                 </div>
                 <div className="flex justify-center items-center gap-5 mr-5">
@@ -126,7 +124,7 @@ const ChatWindow = ({ selectedChatId, onBack }) => {
                 </div>
             </div>
 
-            <div className="overflow-y-auto thin-scrollbar px-4 pt-5 "
+            <div className="overflow-y-auto thin-scrollbar flex-grow px-4 pt-5 "
             >
                 {messages.map(item => (
                     <div
@@ -145,21 +143,23 @@ const ChatWindow = ({ selectedChatId, onBack }) => {
                 <div ref={messageEndRef}></div>
             </div>
 
-            <div className="pt-2 flex justify-center items-center">
-                <textarea
-                    className="w-full border rounded-l p-2"
-                    rows="1"
-                    placeholder="Type your message..."
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                ></textarea>
+            <div className='flex flex-col justify-end'>
+                <div className="pt-2 flex justify-center items-center">
+                    <textarea
+                        className="w-full border rounded-l p-2"
+                        rows="1"
+                        placeholder="Type your message..."
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                    ></textarea>
 
-                <button
-                    className={`bg-blue-500 hover:bg-blue-600 text-white py-3 border-0 px-4 rounded-r `}
-                    onClick={handleSendMessage}
-                >
-                    {newMessage.trim() ? <IoSend className='text-xl' /> : <IoMic className='text-xl' />}
-                </button>
+                    <button
+                        className={`bg-blue-500 hover:bg-blue-600 text-white py-3 border-0 px-4 rounded-r `}
+                        onClick={handleSendMessage}
+                    >
+                        {newMessage.trim() ? <IoSend className='text-xl' /> : <IoMic className='text-xl' />}
+                    </button>
+                </div>
             </div>
         </div>
     );
