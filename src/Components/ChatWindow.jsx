@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoSend, IoMic } from "react-icons/io5";
 import { SlPhone } from "react-icons/sl";
 import { CiSearch } from "react-icons/ci";
@@ -8,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import '../Components/style.css';
 import bgImage from '../assets/Image/bg-4.jpg'
 
-const ChatWindow = ({ selectedChatId }) => {
+const ChatWindow = ({ selectedChatId, onBack }) => {
     console.log(selectedChatId);
     const { id, name, lasttime } = selectedChatId
     console.log(id);
@@ -83,7 +84,7 @@ const ChatWindow = ({ selectedChatId }) => {
                 return a & a;
             }, 0);
         };
-        
+
         const gradients = [
             "bg-gradient-to-tr from-red-500 to-red-700",
             "bg-gradient-to-tr from-green-500 to-green-700",
@@ -100,8 +101,11 @@ const ChatWindow = ({ selectedChatId }) => {
 
             <div className='flex justify-between items-center py-3 shadow-md bg-white w-full'>
 
-                <div className="ml-2 flex gap-1 justify-center items-center">
+                <div className="ml-2 flex md:gap-1 justify-center items-center">
                     {/* <img className="w-12 h-12 rounded-full mr-4" src="https://i.postimg.cc/VvC4rS7v/images-8.jpg" alt="" /> */}
+                    <button onClick={onBack} className="md:hidden bg-transparent p-2">
+                    <IoMdArrowRoundBack className='text-xl'/>
+                    </button>
                     <div>
 
                         <div className={`w-12 h-12 rounded-full mr-4 flex items-center justify-center text-white ${getColorForName(name)}`}>
