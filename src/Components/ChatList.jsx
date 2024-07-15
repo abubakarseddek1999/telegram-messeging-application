@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IoIosMenu } from "react-icons/io";
 import '../Components/style.css';
 
-const ChatList = ({onChatSelect }) => {
+const ChatList = ({ onChatSelect }) => {
     const [chats, setChats] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -28,7 +28,32 @@ const ChatList = ({onChatSelect }) => {
     };
 
     const handleChatClick = (id, name, lasttime) => {
-        onChatSelect ({ id, name, lasttime });
+        onChatSelect({ id, name, lasttime });
+    };
+
+    const getInitials = (name) => {
+        const names = name.split(" ");
+        return names.map((n) => n[0]).join("").toUpperCase();
+    };
+
+    const getColorForName = (name) => {
+        // Example: Assign color based on a hash of the name
+        const hashCode = (s) => {
+            return s.split('').reduce((a, b) => {
+                a = ((a << 3) - a) + b.charCodeAt(0);
+                return a & a;
+            }, 0);
+        };
+        
+        const gradients = [
+            "bg-gradient-to-tr from-red-500 to-red-700",
+            "bg-gradient-to-tr from-green-500 to-green-700",
+            "bg-gradient-to-tr from-blue-700 to-blue-500",
+            "bg-gradient-to-tr from-yellow-500 to-yellow-700",
+            "bg-gradient-to-tr from-purple-500 to-purple-700"
+        ];
+        const index = Math.abs(hashCode(name)) % gradients.length;
+        return gradients[index];
     };
 
     return (
@@ -58,13 +83,18 @@ const ChatList = ({onChatSelect }) => {
                         <p className=' text-end'>12:00</p>
                     </div>
                 </div>
-                
+
                 {chats.map(chat => (
                     chat.creator?.name && (
                         <div key={chat.id} className="mb-8 flex justify-between items-center ">
                             <div className='flex justify-start items-center'>
                                 <div className="relative">
-                                    <img src="https://i.postimg.cc/FKdP5Lhz/young-bearded-man-with-striped-shirt-273609-5677-1.avif" alt={`${chat.creator.name}'s avatar`} className="w-12 h-12 rounded-full mr-4" />
+
+                                    <div>
+                                        <div className={`w-12 h-12 rounded-full mr-4 flex items-center justify-center text-white ${getColorForName(chat.creator.name)}`}>
+                                            <span className="text-xl font-bold">{getInitials(chat?.creator?.name)}</span>
+                                        </div>
+                                    </div>
                                     {/* status */}
                                     {chat.status === 'ongoing' && (
                                         <span className="absolute top-0 right-4 block w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>

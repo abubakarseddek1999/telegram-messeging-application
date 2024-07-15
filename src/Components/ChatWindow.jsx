@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { IoSend, IoMic  } from "react-icons/io5";
+import { IoSend, IoMic } from "react-icons/io5";
 import { SlPhone } from "react-icons/sl";
 import { CiSearch } from "react-icons/ci";
 import axios from 'axios';
@@ -10,7 +10,7 @@ import bgImage from '../assets/Image/bg-4.jpg'
 
 const ChatWindow = ({ selectedChatId }) => {
     console.log(selectedChatId);
-    const {id, name, lasttime}=selectedChatId
+    const { id, name, lasttime } = selectedChatId
     console.log(id);
     // const chatId = id || selectedChatId;
     const [messages, setMessages] = useState([]);
@@ -67,6 +67,33 @@ const ChatWindow = ({ selectedChatId }) => {
         return <div className="p-4">Error fetching messages: {error.message}</div>;
     }
 
+
+    const getInitials = (name) => {
+        const names = name.split(" ");
+        return names.map((n) => n[0]).join("").toUpperCase();
+    };
+    const initials = getInitials(selectedChatId.name);
+
+
+    const getColorForName = (name) => {
+        // Example: Assign color based on a hash of the name
+        const hashCode = (s) => {
+            return s.split('').reduce((a, b) => {
+                a = ((a << 3) - a) + b.charCodeAt(0);
+                return a & a;
+            }, 0);
+        };
+        
+        const gradients = [
+            "bg-gradient-to-tr from-red-500 to-red-700",
+            "bg-gradient-to-tr from-green-500 to-green-700",
+            "bg-gradient-to-tr from-blue-700 to-blue-500",
+            "bg-gradient-to-tr from-yellow-500 to-yellow-700",
+            "bg-gradient-to-tr from-purple-500 to-purple-700"
+        ];
+        const index = Math.abs(hashCode(name)) % gradients.length;
+        return gradients[index];
+    };
     return (
         <div className="flex flex-col h-screen"
             style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
@@ -74,7 +101,15 @@ const ChatWindow = ({ selectedChatId }) => {
             <div className='flex justify-between items-center py-3 shadow-md bg-white w-full'>
 
                 <div className="ml-2 flex gap-1 justify-center items-center">
-                    <img className="w-12 h-12 rounded-full mr-4" src="https://i.postimg.cc/VvC4rS7v/images-8.jpg" alt="" />
+                    {/* <img className="w-12 h-12 rounded-full mr-4" src="https://i.postimg.cc/VvC4rS7v/images-8.jpg" alt="" /> */}
+                    <div>
+
+                        <div className={`w-12 h-12 rounded-full mr-4 flex items-center justify-center text-white ${getColorForName(name)}`}>
+                            <span className="text-xl font-bold">{initials}</span>
+                        </div>
+
+
+                    </div>
                     <div>
                         <p className="text-xl font-bold ">{name}</p>
                         <p>Last seen Yesterday at 12:00</p>
@@ -107,21 +142,21 @@ const ChatWindow = ({ selectedChatId }) => {
             </div>
 
             <div className="pt-2 flex justify-center items-center">
-      <textarea
-        className="w-full border rounded-l p-2"
-        rows="1"
-        placeholder="Type your message..."
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-      ></textarea>
+                <textarea
+                    className="w-full border rounded-l p-2"
+                    rows="1"
+                    placeholder="Type your message..."
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                ></textarea>
 
-      <button
-        className={`bg-blue-500 hover:bg-blue-600 text-white py-3 border-0 px-4 rounded-r `}
-        onClick={handleSendMessage}
-      >
-        {newMessage.trim() ? <IoSend className='text-xl'/> : <IoMic className='text-xl' />}
-      </button>
-    </div>
+                <button
+                    className={`bg-blue-500 hover:bg-blue-600 text-white py-3 border-0 px-4 rounded-r `}
+                    onClick={handleSendMessage}
+                >
+                    {newMessage.trim() ? <IoSend className='text-xl' /> : <IoMic className='text-xl' />}
+                </button>
+            </div>
         </div>
     );
 };
