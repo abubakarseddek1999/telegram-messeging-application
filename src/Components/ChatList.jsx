@@ -4,11 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IoIosMenu } from "react-icons/io";
 import '../Components/style.css';
 
-const ChatList = ({ onChatSelect }) => {
+const ChatList = ({ onChatSelect,selectedChatId
+ }) => {
     const [chats, setChats] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
+    const { id, name, lasttime } = selectedChatId
+    console.log(id);
 
     useEffect(() => {
         axios.get(`https://devapi.beyondchats.com/api/get_all_chats?page=${page}`)
@@ -86,7 +89,7 @@ const ChatList = ({ onChatSelect }) => {
 
                 {chats.map(chat => (
                     chat.creator?.name && (
-                        <div key={chat.id} className="mb-8 flex justify-between items-center ">
+                        <div key={chat.id}  className={`mb-8 p-2 flex justify-between items-center ${id === chat?.id ? 'bg-blue-300 rounded-md shadow-md' : ''}`}>
                             <div className='flex justify-start items-center'>
                                 <div className="relative">
 
