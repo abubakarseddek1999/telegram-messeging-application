@@ -93,8 +93,8 @@ const ChatList = ({ onChatSelect,selectedChatId
 
                 {chats.map(chat => (
                     chat.creator?.name && (
-                        <div key={chat.id}  className={`mb-8 p-2 flex justify-between items-center ${id === chat?.id ? 'bg-blue-300 rounded-md shadow-md' : ''}`}>
-                            <div className='flex justify-start items-center'>
+                        <div key={chat.id}  className={`mb-8 hover:bg-blue-400 hover:shadow-md hover:rounded-md hover:text-white hover:transition transition-0.3 hover:cursor-pointer p-2 flex justify-between items-center ${id === chat?.id ? 'bg-blue-400 rounded-md shadow-md' : ''}`}>
+                            <div  onClick={() => handleChatClick(chat.id, chat.creator?.name, chat?.lasttime)} className='flex justify-start  items-center'>
                                 <div className="relative">
 
                                     <div>
@@ -107,9 +107,9 @@ const ChatList = ({ onChatSelect,selectedChatId
                                         <span className="absolute top-0 right-4 block w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
                                     )}
                                 </div>
-                                <div onClick={() => handleChatClick(chat.id, chat.creator?.name, chat?.lasttime)}>
-                                    <span className="text-blue-500 font-bold cursor-pointer">{chat?.creator?.name}</span>
-                                    <p>i am good learner</p>
+                                <div className={`text-blue-500 font-bold cursor-pointer ${id === chat?.id ? 'text-white ' : ''}` }>
+                                    <span className={`text-black hover:text-white  cursor-pointer ${id === chat?.id ? 'text-white' : ''}` }>{chat?.creator?.name}</span>
+                                    <p className='text-gray-600'>i am good learner</p>
                                 </div>
                             </div>
 
