@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoIosMenu } from "react-icons/io";
 import '../Components/style.css';
 
-const ChatList = () => {
+const ChatList = ({onChatSelect }) => {
     const [chats, setChats] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`https://devapi.beyondchats.com/api/get_all_chats?page=${page}`)
@@ -24,6 +25,10 @@ const ChatList = () => {
         const hours = date.getHours().toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
+    };
+
+    const handleChatClick = (id, name, lasttime) => {
+        onChatSelect ({ id, name, lasttime });
     };
 
     return (
@@ -53,7 +58,7 @@ const ChatList = () => {
                         <p className=' text-end'>12:00</p>
                     </div>
                 </div>
-
+                
                 {chats.map(chat => (
                     chat.creator?.name && (
                         <div key={chat.id} className="mb-8 flex justify-between items-center ">
@@ -65,8 +70,8 @@ const ChatList = () => {
                                         <span className="absolute top-0 right-4 block w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
                                     )}
                                 </div>
-                                <div>
-                                    <Link to={`/chat/${chat.id}`} className="text-blue-500 font-bold">{chat.creator.name}</Link>
+                                <div onClick={() => handleChatClick(chat.id, chat.creator?.name, chat?.lasttime)}>
+                                    <span className="text-blue-500 font-bold cursor-pointer">{chat?.creator?.name}</span>
                                     <p>i am good learner</p>
                                 </div>
                             </div>
