@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosMenu } from "react-icons/io";
+import { CiSearch } from "react-icons/ci";
 import '../Components/style.css';
 
 const ChatList = ({ onChatSelect,selectedChatId
@@ -60,14 +61,17 @@ const ChatList = ({ onChatSelect,selectedChatId
     };
 
     return (
-        <div className="p-4 flex flex-col h-screen overflow-hidden">
+        <div className="p-2 flex flex-col h-screen overflow-hidden">
             {/* search bar */}
-            <div className='  bg-white flex justify-between items-center gap-2 py-2'>
+            <div className="bg-white flex justify-between items-center gap-2 py-2 relative">
                 <IoIosMenu className='text-4xl m-1' />
-                <input className='bg-slate-100 p-2 rounded w-full' placeholder='Search' type="search" name="Search" id="" />
+                <div className="relative w-full">
+                    <input className='bg-slate-100 p-2 pl-10 rounded w-full' placeholder='Search' type="search" name="Search" id="" />
+                    <CiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-400" />
+                </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto thin-scrollbar pr-2">
+            <div className="flex-1 overflow-y-auto thin-scrollbar p-2">
                 {/* telegram msg */}
                 <div className="mb-5 flex justify-between items-center ">
                     <div className='flex justify-start items-center'>
